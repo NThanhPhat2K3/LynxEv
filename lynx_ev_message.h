@@ -18,6 +18,7 @@
 #ifndef __LYNX_EV_MESSAGE_H__
 #define __LYNX_EV_MESSAGE_H__
 
+#include <cstdlib>  // để dùng free
 #include <stdint.h>
 #include <pthread.h>
 
@@ -28,41 +29,43 @@
 struct lynx_ev_header_t
 {
     /* message type */
-    uint32_t message_type;
+    uint32_t    message_type;
 
     /* information */
-    uint32_t signal;
-    uint32_t source_task_id;
-    uint32_t destination_task_id;
+    uint32_t    signal;
+    uint32_t    source_task_id;
+    uint32_t    destination_task_id;
 
     /* data */
-    uint32_t length;
-    void *p_payload;
+    uint32_t    length;
+    void        *p_payload;
 };
 
 /* message node */
 struct lynx_ev_message_t 
 {
-    struct lynx_ev_message_t *p_next;
-    struct lynx_ev_header_t *p_header;
-    struct lynx_ev_message_t *p_previous;
+    struct lynx_ev_message_t    *p_next;
+    struct lynx_ev_header_t     *p_header;
+    struct lynx_ev_message_t    *p_previous;
 };
 
 /* queue for managing messages */
 struct lynx_ev_queue_t
 {
-    pthread_mutex_t mutex;
     uint32_t length;
+    pthread_mutex_t mutex;
     struct lynx_ev_message_t *p_head;
     struct lynx_ev_message_t *p_tail;
 };
 
 /* function declarations */
 extern void                       lynx_ev_queue_init(struct lynx_ev_queue_t *p_queue);
+
+extern struct lynx_ev_message_t*  lynx_ev_queue_get(struct lynx_ev_queue_t *p_queue);
 extern uint32_t                   lynx_ev_queue_length(struct lynx_ev_queue_t *p_queue);
 extern uint32_t                   lynx_ev_queue_available(struct lynx_ev_queue_t *p_queue);
-extern struct lynx_ev_message_t*  lynx_ev_queue_get(struct lynx_ev_queue_t *p_queue);
 extern void                       lynx_ev_queue_put(struct lynx_ev_queue_t *p_queue, struct lynx_ev_message_t *p_message);
+
 extern void                       lynx_ev_message_free(struct lynx_ev_message_t *p_message);
 
 #endif  /* __LYNX_EV_MESSAGE_H__ */
