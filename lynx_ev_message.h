@@ -25,6 +25,12 @@
 #define LYNX_EV_EMPTY_LEN       (0U)
 #define LYNX_EV_AVAILABLE_LEN   (1U)
 
+#define DYNAMIC_MSG_TYPE        (0x40)
+#define PURE_MSG_TYPE           (0x80)
+#define COMMON_MSG_TYPE         (0xC0)
+
+#define LYNX_EV_COMMON_MSG_DATA_SIZE (64U)
+
 /* event message header structure */
 struct lynx_ev_header_t
 {
