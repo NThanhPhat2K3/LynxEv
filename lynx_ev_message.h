@@ -71,6 +71,8 @@ extern struct lynx_ev_message_t*  lynx_ev_queue_get(struct lynx_ev_queue_t *p_qu
 extern uint32_t                   lynx_ev_queue_length(struct lynx_ev_queue_t *p_queue);
 extern uint32_t                   lynx_ev_queue_available(struct lynx_ev_queue_t *p_queue);
 extern void                       lynx_ev_queue_put(struct lynx_ev_queue_t *p_queue, struct lynx_ev_message_t *p_message);
+extern uint32_t                   lynx_ev_queue_is_empty(struct lynx_ev_queue_t *p_queue);
+
 
 extern void                       lynx_ev_message_free(struct lynx_ev_message_t *p_message);
 

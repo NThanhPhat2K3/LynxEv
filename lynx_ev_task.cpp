@@ -1,5 +1,8 @@
 #include "lynx_ev_task.h"
 
+static pthread_mutex_t lynx_ev_mutex_started;
+static uint32_t lynx_ev_task_started = 0;
+
 
 uint32_t lynx_ev_get_message_type(struct lynx_ev_message_t *p_message)
 {
@@ -382,9 +385,89 @@ struct lynx_ev_message_t *lynx_ev_memcpy_message(struct lynx_ev_message_t *p_sou
             lynx_ev_set_message_data_dynamic(p_ret_message,p_source_message->p_header->p_payload,p_source_message->p_header->lenght);
             break;
         default:
-            /* TODO*/
+            /* do notthing */
             break;
 
     }
     return p_ret_message;
+}
+void lynx_ev_task_message_free(struct lynx_ev_message_t *p_message)
+{
+    if(p_message != NULL)
+    {
+        lynx_ev_message_free(p_message);
+    }
+    else
+    {
+        /* do notthing */
+        return;
+    }
+}
+struct lynx_ev_message_t *lynx_ev_task_receive_message(uint32_t destination_task_id)
+{
+    struct lynx_ev_message_t *p_return_message = NULL;
+
+    if(destination_task_id >= LYNX_EV_END_OF_TASK_ID)
+    {
+        /* do notthing */
+        return NULL;
+    }
+    pthread_mutex_lock(&(lynx_task_list[destination_task_id].mt_mailbox_cond))
+
+    struct lynx_ev_queue_t *p_queue_message = lynx_task_list[destination_task_id].mailbox;
+
+    if(LYNX_EV_EMPTY_LEN == lynx_ev_queue_is_empty(p_queue_message))
+    {
+        pthread_cond_wait(&(lynx_task_list[destination_task_id].mailbox_cond), &(lynx_task_list[destination_task_id].mt_mailbox_cond));
+    }
+
+    if(LYNX_EV_AVAILABLE_LEN == lynx_ev_queue_available(p_queue_message))
+    {
+        p_return_message = lynx_ev_queue_get(p_queue_message);
+    }
+    pthread_mutex_unlock(&(lynx_task_list[destination_task_id].mt_mailbox_cond))
+    return p_return_message;
+}
+void lynx_ev_task_init(void)
+{
+    uint32_t index = 0;
+    pthread_mutex_init(&lynx_ev_mutex_started, NULL);
+    /* create mailbox, mutex, condition variable */
+    for (index = 0; index < LYNX_EV_END_OF_TASK_ID; index++) 
+    {
+        lynx_ev_queue_init(lynx_task_list[index].mailbox);
+        pthread_mutex_init(&lynx_task_list[index].mt_mailbox_cond, NULL);
+        pthread_cond_init(&lynx_task_list[index].mailbox_cond, NULL);
+    }
+    /* create task */
+    for (index = 0; index < LYNX_EV_END_OF_TASK_ID; index++) 
+    {
+        pthread_create(&lynx_task_list[index].pthread, NULL, lynx_task_list[index].task, NULL);
+    }
+    for (index = 0; index < LYNX_EV_END_OF_TASK_ID; index++) 
+    {
+        pthread_join(lynx_task_list[index].pthread, NULL);
+    }
+}
+void lynx_ev_task_wait_all_started(void)
+{
+    uint8_t check_return = 1;
+	pthread_mutex_lock(&lynx_ev_mutex_started);
+    lynx_ev_task_started = lynx_ev_task_started + 1;
+    pthread_mutex_unlock(&lynx_ev_mutex_started);
+
+    while(check_return)
+    {
+        pthread_mutex_lock(&lynx_ev_mutex_started);
+        if(lynx_ev_task_started < LYNX_EV_END_OF_TASK_ID)
+        {
+            check_return = 1;
+        }
+        else
+        {
+            check_return = 0;
+        }
+        pthread_mutex_unlock(&lynx_ev_mutex_started);
+        usleep(100);
+    }
 }

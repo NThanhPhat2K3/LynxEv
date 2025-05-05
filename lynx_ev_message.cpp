@@ -153,3 +153,15 @@ void lynx_ev_message_free(struct lynx_ev_message_t  *p_message)
 
     }
 }
+
+uint32_t lynx_ev_queue_is_empty(struct lynx_ev_queue_t *p_queue)
+{
+    uint32_t is_empty = LYNX_EV_EMPTY_LEN; 
+    pthread_mutex_lock(&p_queue->mutex);
+    if (p_queue->p_tail != NULL) {
+        is_empty = LYNX_EV_AVAILABLE_LEN;
+    }
+    pthread_mutex_unlock(&p_queue->mutex);
+    return is_empty;
+}
+
