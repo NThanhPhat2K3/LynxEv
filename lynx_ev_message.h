@@ -22,6 +22,8 @@
 #include <stdint.h>
 #include <pthread.h>
 
+#include "lynx_ev_debug.h"
+
 #define LYNX_EV_EMPTY_LEN       (0U)
 #define LYNX_EV_AVAILABLE_LEN   (1U)
 

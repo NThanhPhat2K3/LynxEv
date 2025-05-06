@@ -92,7 +92,7 @@ extern struct lynx_ev_message_t *lynx_ev_get_dynamic_message(void)
     p_ret_dynamic_message->p_header->length = LYNX_EV_EMPTY_LEN;
     p_ret_dynamic_message->p_header->p_payload = NULL;
 
-    return p_ret_common_message;
+    return p_ret_dynamic_message;
 }
 
 void lynx_ev_set_message_signal(struct lynx_ev_message_t *p_message, uint32_t signal)
@@ -160,13 +160,13 @@ void lynx_ev_set_message_data_common(struct lynx_ev_message_t *p_message,uint8_t
             }
             else
             {
-                p_message->p_header->lenght = lenght;
+                p_message->p_header->length = lenght;
                 if(NULL != p_message->p_header->p_payload)
                 {
                     free(p_message->p_header->p_payload);
                     p_message->p_header->p_payload = NULL;
                 }
-                p_message->p_header->p_payload = (uint8_t*)malloc(sizeof(uint8_t) * p_message->p_header->lenght);
+                p_message->p_header->p_payload = (uint8_t*)malloc(sizeof(uint8_t) * p_message->p_header->length);
                 if(NULL == p_message->p_header->p_payload)
                 {
                     return;
@@ -204,13 +204,13 @@ void lynx_ev_set_message_data_dynamic(struct lynx_ev_message_t *p_message,uint8_
             }
             else
             {
-                p_message->p_header->lenght = lenght;
+                p_message->p_header->length = lenght;
                 if(NULL != p_message->p_header->p_payload)
                 {
                     free(p_message->p_header->p_payload);
                     p_message->p_header->p_payload = NULL;
                 }
-                p_message->p_header->p_payload = (uint8_t*)malloc(sizeof(uint8_t) * p_message->p_header->lenght);
+                p_message->p_header->p_payload = (uint8_t*)malloc(sizeof(uint8_t) * p_message->p_header->length);
                 if(NULL == p_message->p_header->p_payload)
                 {
                     return;
@@ -238,7 +238,7 @@ void lynx_ev_get_message_data_common(struct lynx_ev_message_t *p_message,uint8_t
         {
             if(NULL != p_message->p_header->p_payload)
             {
-                memcpy(p_data,(uint8_t*)p_message->p_header->p_payload, p_message->p_header->lenght);
+                memcpy(p_data,(uint8_t*)p_message->p_header->p_payload, p_message->p_header->length);
             }
             else
             {
@@ -266,7 +266,7 @@ void lynx_ev_get_message_data_dynamic(struct lynx_ev_message_t *p_message,uint8_
         {
             if(NULL != p_message->p_header->p_payload)
             {
-                memcpy(p_data,(uint8_t*)p_message->p_header->p_payload, p_message->p_header->lenght);
+                memcpy(p_data,(uint8_t*)p_message->p_header->p_payload, p_message->p_header->length);
             }
             else
             {
@@ -377,12 +377,12 @@ struct lynx_ev_message_t *lynx_ev_memcpy_message(struct lynx_ev_message_t *p_sou
         case COMMON_MSG_TYPE:
             p_ret_message = lynx_ev_get_common_message();
             memcpy(p_ret_message->p_header,p_source_message->p_header,sizeof(struct lynx_ev_header_t));
-            lynx_ev_set_message_data_common(p_ret_message,p_source_message->p_header->p_payload,p_source_message->p_header->lenght);
+            lynx_ev_set_message_data_common(p_ret_message,(uint8_t *)p_source_message->p_header->p_payload,p_source_message->p_header->length);
             break;
         case DYNAMIC_MSG_TYPE:
             p_ret_message = lynx_ev_get_dynamic_message();
             memcpy(p_ret_message,p_source_message->p_header,sizeof(struct lynx_ev_header_t));
-            lynx_ev_set_message_data_dynamic(p_ret_message,p_source_message->p_header->p_payload,p_source_message->p_header->lenght);
+            lynx_ev_set_message_data_dynamic(p_ret_message,(uint8_t *) p_source_message->p_header->p_payload,p_source_message->p_header->length);
             break;
         default:
             /* do notthing */
@@ -412,7 +412,7 @@ struct lynx_ev_message_t *lynx_ev_task_receive_message(uint32_t destination_task
         /* do notthing */
         return NULL;
     }
-    pthread_mutex_lock(&(lynx_task_list[destination_task_id].mt_mailbox_cond))
+    pthread_mutex_lock(&(lynx_task_list[destination_task_id].mt_mailbox_cond));
 
     struct lynx_ev_queue_t *p_queue_message = lynx_task_list[destination_task_id].mailbox;
 
@@ -425,7 +425,7 @@ struct lynx_ev_message_t *lynx_ev_task_receive_message(uint32_t destination_task
     {
         p_return_message = lynx_ev_queue_get(p_queue_message);
     }
-    pthread_mutex_unlock(&(lynx_task_list[destination_task_id].mt_mailbox_cond))
+    pthread_mutex_unlock(&(lynx_task_list[destination_task_id].mt_mailbox_cond));
     return p_return_message;
 }
 void lynx_ev_task_init(void)

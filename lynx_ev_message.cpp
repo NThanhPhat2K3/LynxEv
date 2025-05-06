@@ -26,6 +26,7 @@ void lynx_ev_queue_init(struct lynx_ev_queue_t *p_queue)
     p_queue->p_tail = NULL;
     p_queue->length = LYNX_EV_EMPTY_LEN;
     pthread_mutex_init(&p_queue->mutex, NULL);
+    LYNX_EV_MSG_DBG("[MSG] message queue init\n");
 }
 
 /**
@@ -146,10 +147,13 @@ void lynx_ev_message_free(struct lynx_ev_message_t  *p_message)
             if(NULL != p_message->p_header->p_payload)
             {
                 free(p_message->p_header->p_payload);
+                LYNX_EV_MSG_DBG("[MSG] free payload");
             }
             free(p_message->p_header);
+            LYNX_EV_MSG_DBG("[MSG] free header");
         }
         free(p_message);
+        LYNX_EV_MSG_DBG("[MSG] free message");
 
     }
 }

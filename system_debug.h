@@ -6,7 +6,7 @@
 #include <string.h>
 
 /* Enable file logging */
-// #define EN_LOG_FILE 
+#define EN_LOG_FILE 
 
 /* Color definitions for terminal output */
 #define KNRM  "\x1B[0m"
@@ -21,19 +21,19 @@
 /* Extract short file name from full path */
 #define __SHORT_FILE__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
-/* Log macro with both console and file logging */
-#define __LOG__(fmt, loglevel, ...) \
-    do { \
-        printf("%s%s %s%s %s%s:%d %s" fmt, KBLU, sys_dbg_get_time(), KYEL, loglevel, KGRN, __SHORT_FILE__, __LINE__, KNRM, ##__VA_ARGS__); \
-        /* Write to log file if enabled */ \
-        /* Pass file name and line number */ \
-        /* Using macro arguments, not inside log_to_file */ \
-        /* So it reflects the caller’s location */ \
-        /* Not the log_to_file’s own location */ \
-        /* This ensures meaningful file:line in logs */ \
-        #ifdef EN_LOG_FILE \
-        log_to_file(__SHORT_FILE__, __LINE__, fmt, loglevel, ##__VA_ARGS__); \
-        #endif \
+#ifdef EN_LOG_FILE
+#define LOG_TO_FILE(file, line, fmt, loglevel, ...) \
+    log_to_file(file, line, fmt, loglevel, ##__VA_ARGS__);
+#else
+#define LOG_TO_FILE(file, line, fmt, loglevel, ...)
+#endif
+
+#define __LOG__(fmt, loglevel, ...)                                           \
+    do {                                                                      \
+        printf("%s%s %s%s %s%s:%d %s" fmt,                                    \
+               KBLU, sys_dbg_get_time(), KYEL, loglevel,                     \
+               KGRN, __SHORT_FILE__, __LINE__, KNRM, ##__VA_ARGS__);         \
+        LOG_TO_FILE(__SHORT_FILE__, __LINE__, fmt, loglevel, ##__VA_ARGS__); \
     } while(0)
 
 /* Public macros for logging */

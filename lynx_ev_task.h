@@ -1,10 +1,13 @@
+#ifndef __LYNX_EV_TASK_H__
+#define __LYNX_EV_TASK_H__
 #include <stdint.h>
 #include <pthread.h>
 #include <unistd.h>
 #include "lynx_ev_message.h"
-#include "lynx_ev_task.h"
+#include "lynx_ev_task_list.h"
 
 typedef void* (*lynx_task)(void*);
+
 struct lynx_task_t
 {
     uint32_t id;
@@ -20,7 +23,7 @@ struct lynx_task_t
 	uint32_t		mailbox_len;
     pthread_mutex_t	mt_mailbox_cond;
 
-}
+};
 
 /* message service */
 extern struct lynx_ev_message_t *lynx_ev_get_pure_message(void);
@@ -50,7 +53,4 @@ extern struct lynx_ev_message_t *lynx_ev_task_receive_message(uint32_t destinati
 extern void lynx_ev_task_init(void);
 extern void lynx_ev_task_wait_all_started(void);
 
-
-
-
-
+#endif

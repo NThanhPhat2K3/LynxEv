@@ -10,9 +10,9 @@
 static timer_t timer_id;
 static pthread_mutex_t mt_timer_service;
 static uint32_t lynx_ev_timer_system_tick = 0;
-static struct lynx_ev_timer_queue_t lynx_ev_timer_queue;
-
-static void lynx_ev_timer_handler(void)
+struct lynx_ev_timer_queue_t lynx_ev_timer_queue;
+struct lynx_ev_queue_t queue_timer;
+static void lynx_ev_timer_handler(sigval_t)
 {
 	struct lynx_ev_timer_message_t *p_timer_node_temp = lynx_ev_timer_queue.p_tail;
 	struct lynx_ev_timer_message_t *p_timer_node_remove = NULL;
@@ -54,7 +54,7 @@ static void lynx_ev_timer_handler(void)
 
 	pthread_mutex_unlock(&mt_timer_service);
 }
-void lynx_ev_timer_init(void)
+void *lynx_ev_timer_init(void*)
 {
 	/* configure timer queue */
 	lynx_ev_timer_queue.p_tail = NULL;
@@ -68,7 +68,7 @@ void lynx_ev_timer_init(void)
 	sev.sigev_notify = SIGEV_THREAD;
 	sev.sigev_value.sival_ptr = &timer_id;
 	sev.sigev_notify_attributes	= NULL;
-	sev.sigev_notify_function = timer_handler;
+	sev.sigev_notify_function = lynx_ev_timer_handler;
 	timer_create(CLOCK_REALTIME, &sev, &timer_id);
 
 	/* start the timer */
@@ -79,11 +79,16 @@ void lynx_ev_timer_init(void)
 	timer_settime(timer_id, 0, &its, NULL);
 
     pthread_mutex_init(&mt_timer_service, NULL);
+	LYNX_EV_TIMER_DBG("[TMR] init sucessfull\n");
+    lynx_ev_task_wait_all_started();
+
+	return NULL;
 }
-uint32_t lynx_ev_timer_set(uint32_t destination_task_id,uint32_t signal,lynx_ev_timer_message_t timer_type,uint32_t duty)
+uint32_t lynx_ev_timer_set(uint32_t destination_task_id,uint32_t signal,lynx_ev_timer_type_t timer_type,uint32_t duty)
 {
 	if(duty < LYNX_EV_TIMER_UNIT)
 	{
+		LYNX_EV_TIMER_WRN("[TMR] duty config error");
 		/* error setting */
 		return LYNX_EV_NG;
 	}
@@ -97,6 +102,7 @@ uint32_t lynx_ev_timer_set(uint32_t destination_task_id,uint32_t signal,lynx_ev_
 			/* change duty cycle */
 			p_timer_node_temp->p_header.counter = duty;
 			pthread_mutex_unlock(&mt_timer_service);
+			LYNX_EV_TIMER_WRN("[TMR] change duty cycle\n");
 			return LYNX_EV_OK;
 		}
 		else
@@ -108,6 +114,7 @@ uint32_t lynx_ev_timer_set(uint32_t destination_task_id,uint32_t signal,lynx_ev_
 
 	if(NULL == p_timer_new)
 	{
+		LYNX_EV_TIMER_WRN("[TMR] allocate fail\n");
 		/* allocate fail */
 		return LYNX_EV_NG;
 	}

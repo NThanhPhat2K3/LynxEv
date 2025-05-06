@@ -1,0 +1,169 @@
+2025-05-06 14:48:16 SYS_PRINT main.cpp:35 HELLO WORLD
+
+2025-05-06 14:48:26 SYS_PRINT main.cpp:35 HELLO WORLD
+
+2025-05-06 14:48:27 SYS_PRINT main.cpp:35 HELLO WORLD
+
+2025-05-06 14:50:47 SYS_PRINT main.cpp:35 HELLO WORLD
+
+2025-05-06 14:51:14 SYS_PRINT main.cpp:35 HELLO WORLD
+
+2025-05-06 15:01:24 SYS_PRINT main.cpp:36 HELLO WORLD
+
+2025-05-06 15:01:24 MSG main.cpp:37 HELLO World
+
+2025-05-06 15:01:24 MSG_WRN main.cpp:38 HELLO World
+
+2025-05-06 15:01:24 TIMER main.cpp:39 Hello World
+
+2025-05-06 15:01:24 LYNX_EV_PRINT main.cpp:40 Hello World
+
+2025-05-06 15:08:41 SYS_PRINT main.cpp:36 HELLO WORLD
+
+2025-05-06 15:08:41 MSG main.cpp:37 HELLO World
+
+2025-05-06 15:08:41 MSG_WRN main.cpp:38 HELLO World
+
+2025-05-06 15:08:41 TIMER main.cpp:39 Hello World
+
+2025-05-06 15:08:41 LYNX_EV_PRINT main.cpp:40 Hello World
+
+2025-05-06 15:23:43 SYS_PRINT main.cpp:37 HELLO WORLD
+
+2025-05-06 15:23:43 MSG main.cpp:38 HELLO World
+
+2025-05-06 15:23:43 MSG_WRN main.cpp:39 HELLO World
+
+2025-05-06 15:23:43 TIMER main.cpp:40 Hello World
+
+2025-05-06 15:23:43 LYNX_EV_PRINT main.cpp:41 Hello World
+
+2025-05-06 15:23:43  main.cpp:42 Hello World
+
+2025-05-06 15:23:43 APP_DBG main.cpp:43 Hello World
+
+2025-05-06 15:23:43 SIG ->  main.cpp:44 Hello World
+
+2025-05-06 17:11:03 SYS_PRINT main.cpp:39 HELLO WORLD
+
+2025-05-06 17:11:03 MSG main.cpp:40 HELLO World
+
+2025-05-06 17:11:03 MSG_WRN main.cpp:41 HELLO World
+
+2025-05-06 17:11:03 TIMER main.cpp:42 Hello World
+
+2025-05-06 17:11:03 LYNX_EV_PRINT main.cpp:43 Hello World
+
+2025-05-06 17:11:03  main.cpp:44 Hello World
+
+2025-05-06 17:11:03 APP_DBG main.cpp:45 Hello World
+
+2025-05-06 17:11:03 SIG ->  main.cpp:46 Hello World
+
+2025-05-06 17:21:46 MSG lynx_ev_message.cpp:29 [MSG] message queue init
+2025-05-06 17:21:46 TIMER lynx_ev_timer.cpp:82 [TMR] init sucessfull
+
+2025-05-06 17:21:46 SYS_PRINT main.cpp:40 HELLO WORLD
+
+2025-05-06 17:21:46 MSG main.cpp:41 HELLO World
+
+2025-05-06 17:21:46 MSG_WRN main.cpp:42 HELLO World
+
+2025-05-06 17:21:46 TIMER main.cpp:43 Hello World
+
+2025-05-06 17:21:46 LYNX_EV_PRINT main.cpp:44 Hello World
+
+2025-05-06 17:21:46  main.cpp:45 Hello World
+
+2025-05-06 17:21:46 APP_DBG main.cpp:46 Hello World
+
+2025-05-06 17:21:46 SIG ->  main.cpp:47 Hello World
+
+2025-05-06 17:53:47 MSG lynx_ev_message.cpp:29 [MSG] message queue init
+2025-05-06 17:53:47 TIMER lynx_ev_timer.cpp:82 [TMR] init sucessfull
+
+2025-05-06 17:53:47 SYS_PRINT main.cpp:40 HELLO WORLD
+
+2025-05-06 17:53:47 MSG main.cpp:41 HELLO World
+
+2025-05-06 17:53:47 MSG_WRN main.cpp:42 HELLO World
+
+2025-05-06 17:53:47 TIMER main.cpp:43 Hello World
+
+2025-05-06 17:53:47 LYNX_EV_PRINT main.cpp:44 Hello World
+
+2025-05-06 17:53:47  main.cpp:45 Hello World
+
+2025-05-06 17:53:47 APP_DBG main.cpp:46 Hello World
+
+2025-05-06 17:53:47 SIG ->  main.cpp:47 Hello World
+
+2025-05-06 17:57:03 MSG lynx_ev_message.cpp:29 [MSG] message queue init
+2025-05-06 17:57:03 TIMER lynx_ev_timer.cpp:82 [TMR] init sucessfull
+
+2025-05-06 17:57:03 SYS_PRINT main.cpp:40 HELLO WORLD
+
+2025-05-06 17:57:03 MSG main.cpp:41 HELLO World
+
+2025-05-06 17:57:03 MSG_WRN main.cpp:42 HELLO World
+
+2025-05-06 17:57:03 TIMER main.cpp:43 Hello World
+
+2025-05-06 17:57:03 LYNX_EV_PRINT main.cpp:44 Hello World
+
+2025-05-06 17:57:03  main.cpp:45 Hello World
+
+2025-05-06 17:57:03 APP_DBG main.cpp:46 Hello World
+
+2025-05-06 17:57:03 SIG ->  main.cpp:47 Hello World
+
+2025-05-06 17:58:10 MSG lynx_ev_message.cpp:29 [MSG] message queue init
+2025-05-06 17:58:10 TIMER lynx_ev_timer.cpp:82 [TMR] init sucessfull
+
+2025-05-06 17:58:10 SYS_PRINT main.cpp:40 HELLO WORLD
+
+2025-05-06 17:58:10 MSG main.cpp:41 HELLO World
+
+2025-05-06 17:58:10 MSG_WRN main.cpp:42 HELLO World
+
+2025-05-06 17:58:10 TIMER main.cpp:43 Hello World
+
+2025-05-06 17:58:10 LYNX_EV_PRINT main.cpp:44 Hello World
+
+2025-05-06 17:58:10  main.cpp:45 Hello World
+
+2025-05-06 17:58:10 APP_DBG main.cpp:46 Hello World
+
+2025-05-06 17:58:10 SIG ->  main.cpp:47 Hello World
+
+2025-05-06 17:58:12 MSG lynx_ev_message.cpp:29 [MSG] message queue init
+2025-05-06 17:58:12 TIMER lynx_ev_timer.cpp:82 [TMR] init sucessfull
+
+2025-05-06 17:58:12 SYS_PRINT main.cpp:40 HELLO WORLD
+
+2025-05-06 17:58:12 MSG main.cpp:41 HELLO World
+
+2025-05-06 17:58:12 MSG_WRN main.cpp:42 HELLO World
+
+2025-05-06 17:58:12 TIMER main.cpp:43 Hello World
+
+2025-05-06 17:58:12 LYNX_EV_PRINT main.cpp:44 Hello World
+
+2025-05-06 17:58:12  main.cpp:45 Hello World
+
+2025-05-06 17:58:12 APP_DBG main.cpp:46 Hello World
+
+2025-05-06 17:58:12 SIG ->  main.cpp:47 Hello World
+
+2025-05-06 17:58:45 MSG lynx_ev_message.cpp:29 [MSG] message queue init
+
+2025-05-06 17:58:45 MSG lynx_ev_message.cpp:29 [MSG] message queue init
+
+2025-05-06 17:58:45 TIMER lynx_ev_timer.cpp:82 [TMR] init sucessfull
+
+2025-05-06 18:05:13 MSG lynx_ev_message.cpp:29 [MSG] message queue init
+
+2025-05-06 18:05:13 MSG lynx_ev_message.cpp:29 [MSG] message queue init
+
+2025-05-06 18:05:13 TIMER lynx_ev_timer.cpp:82 [TMR] init sucessfull
+
