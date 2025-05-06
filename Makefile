@@ -14,6 +14,7 @@ SRCS = main.cpp					\
        lynx_ev_task_list.cpp	\
        lynx_ev_timer.cpp		\
 	   lynx_ev_task_sample.cpp	\
+	   lynx_ev_app_task_send_sample.cpp \
        system_debug.cpp
 
 # Object files (tạo trong build/)

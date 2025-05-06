@@ -147,13 +147,13 @@ void lynx_ev_message_free(struct lynx_ev_message_t  *p_message)
             if(NULL != p_message->p_header->p_payload)
             {
                 free(p_message->p_header->p_payload);
-                LYNX_EV_MSG_DBG("[MSG] free payload");
+                LYNX_EV_MSG_DBG("[MSG] free payload\n");
             }
             free(p_message->p_header);
-            LYNX_EV_MSG_DBG("[MSG] free header");
+            LYNX_EV_MSG_DBG("[MSG] free header\n");
         }
         free(p_message);
-        LYNX_EV_MSG_DBG("[MSG] free message");
+        LYNX_EV_MSG_DBG("[MSG] free message\n");
 
     }
 }

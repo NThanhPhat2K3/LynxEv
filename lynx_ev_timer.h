@@ -6,7 +6,7 @@
 #include "lynx_ev_task.h"
 #include "lynx_ev_debug.h"
 
-#define LYNX_EV_TIMER_UNIT  (100U) /* 100ms */
+#define LYNX_EV_TIMER_UNIT  (10U) /* 10ms */
 #define LYNX_EV_OK          (0x00)
 #define LYNX_EV_NG          (0x01)
 

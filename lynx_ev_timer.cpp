@@ -33,7 +33,7 @@ static void lynx_ev_timer_handler(sigval_t)
 				/* timer periodic */
 				p_timer_node_temp->p_header.counter = p_timer_node_temp->p_header.period;
 			}
-			else
+			else if(TIMER_ONE_SHOT == p_timer_node_temp->p_header.timer_type )
 			{
 				/* timer one-shot */
 				p_timer_node_remove = p_timer_node_temp;

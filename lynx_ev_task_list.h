@@ -7,12 +7,14 @@
 #include "lynx_ev_task.h"
 
 #include "lynx_ev_task_sample.h"
+#include "lynx_ev_app_task_send_sample.h"
 
 enum lynx_ev_task_list 
 {
     /* timer service */
     LYNX_EV_TASK_TIMER_ID,
     LYNX_EV_TASK_SAMPLE_ID,
+    LYNX_EV_TASK_SEND_SAMPLE_ID,
 
     /* end of task list */
     LYNX_EV_END_OF_TASK_ID
