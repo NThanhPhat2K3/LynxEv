@@ -1,44 +1,55 @@
-# Compiler and flags
+#############################################################
+# Makefile
+# author       : phat.nguyen-thanh
+# created Date : 2025-05-07
+# description  : build system for C++ event-driven project
+#############################################################
+
+# compiler and flags
 CXX = g++
-CXXFLAGS = -Wall -std=c++11
+CXXFLAGS = -Wall  -std=c++11 -g -O2
 LDFLAGS = -lpthread -lrt
-BUILD_DIR = build
 
-# Output file
-TARGET = main
+# build and target
+BUILD_DIR = 04_build
+TARGET = lynx_app_main
 
-# Source files (chỉ *.cpp, KHÔNG gồm *.h)
-SRCS = main.cpp					\
-       lynx_ev_message.cpp		\
-       lynx_ev_task.cpp			\
-       lynx_ev_task_list.cpp	\
-       lynx_ev_timer.cpp		\
-	   lynx_ev_task_sample.cpp	\
-	   lynx_ev_app_task_send_sample.cpp \
-       system_debug.cpp
+# source directories
+SRC_DIRS := 00_application_software 01_event_driven_kernel 02_driver 03_others
 
-# Object files (tạo trong build/)
-OBJS = $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
+# include paths for headers
+INCLUDES := $(foreach dir,$(SRC_DIRS),-I$(dir))
 
-# Default rule
-all: $(BUILD_DIR) $(TARGET)
+# source files
+SRCS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
 
-# Create build directory if not exists
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+# object files (mirror folder structure)
+OBJS := $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 
-# Linking
+# default rule
+all: $(TARGET)
+
+# link object files into target
 $(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $^ $(LDFLAGS)
 
-# Compilation rule
+# compile .cpp to .o
 $(BUILD_DIR)/%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
-# Run rule
-run:
+# run target
+run: $(TARGET)
 	./$(TARGET)
 
-# Clean rule
+# clean build artifacts
 clean:
 	rm -rf $(BUILD_DIR) $(TARGET)
+
+# debug rule (rebuild with no optimization)
+debug: CXXFLAGS += -O0 -DDEBUG -fsanitize=address
+debug: clean all
+
+# release rule (max optimization, no debug info)
+release: CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -O3
+release: clean all

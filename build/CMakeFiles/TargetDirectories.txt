@@ -1,0 +1,3 @@
+/home/yourusername/lynx/LynxEv/build/CMakeFiles/edit_cache.dir
+/home/yourusername/lynx/LynxEv/build/CMakeFiles/rebuild_cache.dir
+/home/yourusername/lynx/LynxEv/build/CMakeFiles/lynx_app_main.dir
